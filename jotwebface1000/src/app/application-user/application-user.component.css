@@ -1,0 +1,87 @@
+  .tblusers {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 800px;
+  }
+  
+  .tblusers td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .tblusers tr:nth-child(even) {
+    background-color:  #dddddd;
+  }
+  
+  
+  .tblregisteruser {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 800px;
+  }
+  
+  .tblregisteruser td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 3px;
+  }
+  
+  .tblregisteruser tr:nth-child(even) {
+    background-color: white;
+  }
+
+
+  
+
+/* The Modal (background) */
+.modal-UserAddNewPopup {
+  display: block; /* Hidden by default */
+  position: absolute; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 0px; /* Location of the box */
+  left: 100px;
+  top: 50px;
+  width: 1000px; /* Full width */
+  height: 500px; /* Full height */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-header-UserAddNewPopup {
+	background-color: #e91e63;
+	width:1000px;
+	height:50px;
+}
+.modal-content-UserAddNewPopup {
+	position: fixed;
+	background-color: white;
+	width:1000px;
+	height:500px;
+	overflow: scroll;
+}
+.modal-footer-UserAddNewPopup {
+	background-color: #e91e63;
+	width:1000px;
+	height:25px;
+	margin-top: 500px;
+}
+
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 48px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+

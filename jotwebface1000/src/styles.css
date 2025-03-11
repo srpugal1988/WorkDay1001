@@ -1,0 +1,271 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #eaebeb;
+  }
+  
+  .navbar {
+    overflow: hidden;
+    background-color: #504c62;
+    display: block;
+    position: absolute;
+    width:1250px;
+  }
+  
+  .navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  .dropdown {
+    float: left;
+    overflow: hidden;
+  }
+  
+  .dropdown .dropbtn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+  }
+  
+  .navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+  }
+  
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+    position: fixed;
+  }
+  
+  /***************Third layer menu related changes started**********************/
+  .dropdown-r8 {
+    float: left;
+    overflow: hidden;
+  }
+  
+  .dropdown-r8 .dropbtn-r8 {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: rgb(0, 0, 0);
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+    width: 160px;
+    text-align: left;
+  }
+  
+  .dropdown-r8:hover .dropbtn-r8 {
+    background-color: rgb(221, 217, 217);
+  }
+  
+  
+  .dropdown-content-r8 {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    margin-left: 160px;
+    margin-top: -50px;
+  }
+  
+  .dropdown-content-r8 a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .dropdown-content-r8 a:hover {
+    background-color: #ddd;
+  }
+  
+  .dropdown-r8:hover .dropdown-content-r8 {
+    display: block;
+    position: fixed;
+  }
+  /***************Third layer menu related changes finished**********************/
+  
+  
+  .clsdivbackground
+  {
+      background-color:#99999d;
+      height: 100%;
+      width:  100%;
+      position: fixed;
+      overflow: auto;
+  }
+  
+  .clsdivlogo
+  {
+      background-color:aqua;
+      height:100px;
+      width: 100px;
+      float: left;
+  }
+  
+  .clsimglogo
+  {
+      height: 100px;
+      width:100px;
+  }
+  .clsdivheader
+  {
+      background-color:#858585;
+      height: 50px;
+      width: 1250px;
+      margin-left: 100px;
+  }
+  
+  
+  .clsdivnavigation
+  {
+      height: 50px;
+      width: 1250px;
+      margin-left: 100px;
+  }
+  
+  .clscovertwo  {
+  
+      display: flex;
+      
+  }
+  .clsdivleftcontent
+  {
+      background-color: #504c62;
+      height: 500px;
+      width: 100px;
+  }
+  
+  
+  .clsdivcentercontent
+  {
+      background-color:white;
+      height: 500px;
+      width: 1200px;
+      overflow: scroll;
+  }
+  
+  .clsdivworkarea 
+  {
+      margin-left: 50px;
+      margin-top: 50px;
+  }
+  .clsdivrightcontent
+  {
+      background-color: #504c62;
+      height: 500px;
+      width: 50px;
+  }
+  
+  .clsdivfooter
+  {
+      background-color:#858585;
+      height: 40px;
+      width: 1350px;
+    text-align:center;
+  }
+  
+  label {
+      margin-left: 10px;
+  }
+  
+  
+  input[type=text], input[type=password], input[type=date],input[type=file],input[type=email],select {
+    width: 300px;
+    padding: 12px 20px;
+    margin: 8px 18px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 800px;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  
+  .badge {
+    background-color: red;
+    color: white;
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 5px;
+  }
+  
+  .clsdivloggedinfo{
+      padding: 10px;
+      float: left;	
+  }
+  
+  .clsdivloggedbutton{
+      padding: 10px;	
+      float: right;
+      font-weight: bold;
+  }
+  
+  .clslbldispalyname{
+      color: #00ffd0;
+      font-weight: bold;
+  }
+  
+  .clslbldispalyrole{
+      color: #00ff14;
+      font-size: 14px;
+  }
+  
+  .clslbldisplaymoduleindex{
+      color: #00ff14;
+      font-size: 14px;
+      visibility: hidden;
+  }

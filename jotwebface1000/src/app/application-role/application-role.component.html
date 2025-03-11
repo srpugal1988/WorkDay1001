@@ -1,0 +1,169 @@
+<div class="clsdivbackground" id="iddivbackground">
+    
+    
+    <div class="clscoverone" id="idcoverone">
+      <div class="clsdivlogo" id="iddivlogo">
+        <img class="clsimglogo" src="assets/images/jcmscompanylogo.jpg"/>
+      </div>
+      <div class="clsdivheader" id="iddivheader">
+      
+        <div class="clsdivloggedinfo">
+        Welcome <label class="clslbldispalyname">{{displayname}}</label>
+                <label class="clslbldispalyrole">{{rolename}}</label>
+                <label class="clslbldisplaymoduleindex"  id="idlblmoduleindex">{{moduleindex}}</label>
+        </div>
+        
+        <div class="clsdivloggedbutton">
+          <a href="http://localhost:8080/Jotwebserviceapi1000/auth/logout?id={{globalId}}" type="GET">Logout</a>
+        </div>
+      
+      </div>
+      <div class="clsdivnavigation" id="iddivnavigation">
+      
+        <div class="navbar">
+          <a href="http://localhost:8080/Jotwebserviceapi1000/1000" id="M1000">Home</a>
+          
+          <div class="dropdown">
+          <button class="dropbtn" id="M2000">Workday 
+          </button>
+          <div class="dropdown-content">
+            <a href="http://localhost:8080/Jotwebserviceapi1000/2100"  id="M2100">Create Business</a>
+            <a href="http://localhost:8080/Jotwebserviceapi1000/2200"  id="M2200">Read Business</a>
+            <a href="http://localhost:8080/Jotwebserviceapi1000/2300"  id="M2300">Update Business</a>
+            <a href="http://localhost:8080/Jotwebserviceapi1000/2400"  id="M2400">Delete Business</a>
+          </div>
+          </div> 
+            
+          <div class="dropdown" >
+          <button class="dropbtn" id="M3000">Settings 
+          </button>
+          <div class="dropdown-content">
+            <a href="http://localhost:8080/Jotwebserviceapi1000/3100" id="M3100">User</a>
+            <a href="http://localhost:8080/Jotwebserviceapi1000/3200" id="M3200">Role</a>
+                <div class="dropdown-r8" >
+                  <button class="dropbtn-r8" id="M3300">Browser 
+                  </button>
+                  <div class="dropdown-content-r8">
+                    <a href="http://localhost:8080/Jotwebserviceapi1000/3310" id="M3310">Sessions</a>
+                  </div>
+              </div> 
+          </div>
+          </div> 
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="clscovertwo" id="idcovertwo">
+      <div class="clsdivleftcontent" id="iddivleftcontent">
+      
+      </div>
+      <div class="clsdivcentercontent" id="iddivcentercontent">
+<!----------------------------------------- Center Content started ------------------------------------------->
+          
+<div class="clsdivworkarea">
+  <label>Choose Role</label>
+  <select id="roles" (change)='roleChanging($event)'>
+  <option *ngFor="let row of roleslist" [value]="row.roleid">
+    {{row.rolename}}
+  </option>
+</select>
+
+<input type="button" (click)="openPopup1();" value="Add Role"/>
+    <br>
+    <br> 
+    <br>   
+    <table class="tblrolesinfo">
+      <thead>  
+      <tr>
+        <th>ModuleName</th>
+        <th></th>
+        <th></th>
+        <th  style="text-align: center;">Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rrl of rolesrightlist;">
+        <td [ngSwitch]="rrl.level">
+          <label *ngSwitchCase="1">{{ rrl.modulename }}</label>
+        </td>
+        <td [ngSwitch]="rrl.level">
+          <label *ngSwitchCase="2">{{ rrl.modulename }}</label>
+        </td>
+        <td [ngSwitch]="rrl.level">
+          <label *ngSwitchCase="3">{{ rrl.modulename }}</label>
+        </td>
+        <td [ngSwitch]="rrl.rights" style="text-align: center;"  (click)="ChangeModuleAccess(rrl)">
+          <img *ngSwitchCase="1"  alt="" src="assets/images/greenball.png" />
+          <img *ngSwitchCase="0"  alt="" src="assets/images/redball.png" />
+          <img *ngSwitchDefault=""   alt="" src="assets/images/whiteball.png" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>  
+ 
+
+<!-- -------------------------------------------------------------UserRoleNewPopup content started ------------------------------------------------------------------------->
+<div id="myModal" class="modal-UserRoleNewPopup">
+  <div id="myModalheader" class="modal-header-UserRoleNewPopup">
+   <span class="close" (click)="closeUserRoleNewPopup()">&times;</span>
+  </div>
+  <div class="modal-content-UserRoleNewPopup">
+        <div>
+            <h1>Register</h1>
+            <p>Please create new role for this application.</p>
+            <hr>
+            
+          <table class="tblrolesregister">
+          <thead> 
+          <tr>
+          <th>
+            </th>
+            <th>
+            </th>
+            </tr>
+          </thead>  
+            
+          <tbody>
+          <tr>
+          <td>
+            <label for="rolename"><b>Role</b></label>
+            </td>
+            <td>
+            <input type="text" placeholder="Enter Role" name="newrolename" id="newrolename" />
+            </td>
+            </tr>
+          
+          <tr>
+          <td>
+          </td>
+          <td>
+            <input type="button" placeholder="Save" name="Save" id="Save" value="Save" (click)="RoleRegistration();"/>
+            </td>
+          </tr>
+           </tbody>  
+            </table>
+        </div>				
+
+
+  </div>
+   <div class="modal-footer-UserRoleNewPopup">
+  </div>
+</div>
+<!-- -------------------------------------------------------------UserRoleNewPopup content completed------------------------------------------------------------------------>			
+
+<!------------------------------------------- Center Content finished ------------------------------------------>
+      </div>
+      <div class="clsdivrightcontent" id="iddivrightcontent">
+      
+      </div>
+    </div>
+  
+    <div class="clsdivfooter" id="iddivfooter">
+        Copyrights by   <label>{{client}}</label>
+        Version:   <label>{{version}}</label>
+    </div>
+    
+    
+</div>

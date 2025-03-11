@@ -1,0 +1,248 @@
+<div class="clsdivbackground" id="iddivbackground">
+    
+    
+    <div class="clscoverone" id="idcoverone">
+      <div class="clsdivlogo" id="iddivlogo">
+      <img class="clsimglogo" src="assets/images/jcmscompanylogo.jpg"/>
+      </div>
+      <div class="clsdivheader" id="iddivheader">
+      
+        <div class="clsdivloggedinfo">
+        Welcome <label class="clslbldispalyname">{{displayname}}</label>
+                <label class="clslbldispalyrole">{{rolename}}</label>
+                <label class="clslbldisplaymoduleindex"  id="idlblmoduleindex">{{moduleindex}}</label>
+        </div>
+        
+        <div class="clsdivloggedbutton">
+          <a href="http://localhost:8080/Jotwebserviceapi1000/auth/logout?id={{globalId}}" type="GET">Logout</a>
+        </div>
+      
+      </div>
+      <div class="clsdivnavigation" id="iddivnavigation">
+      
+        <div class="navbar">
+          <a href="http://localhost:8080/Jotwebserviceapi1000/1000" id="M1000">Home</a>
+          
+          <div class="dropdown">
+          <button class="dropbtn" id="M2000">Workday 
+          </button>
+          <div class="dropdown-content">
+            <a href="http://localhost:8080/Jotwebserviceapi1000/2100"  id="M2100">Create Business</a>
+            <a href="http://localhost:8080/Jotwebserviceapi1000/2200"  id="M2200">Read Business</a>
+            <a href="http://localhost:8080/Jotwebserviceapi1000/2300"  id="M2300">Update Business</a>
+            <a href="http://localhost:8080/Jotwebserviceapi1000/2400"  id="M2400">Delete Business</a>
+          </div>
+          </div> 
+            
+          <div class="dropdown" >
+          <button class="dropbtn" id="M3000">Settings 
+          </button>
+          <div class="dropdown-content">
+            <a href="http://localhost:8080/Jotwebserviceapi1000/3100" id="M3100">User</a>
+            <a href="http://localhost:8080/Jotwebserviceapi1000/3200" id="M3200">Role</a>
+                <div class="dropdown-r8" >
+                  <button class="dropbtn-r8" id="M3300">Browser 
+                  </button>
+                  <div class="dropdown-content-r8">
+                    <a href="http://localhost:8080/Jotwebserviceapi1000/3310" id="M3310">Sessions</a>
+                  </div>
+              </div> 
+          </div>
+          </div> 
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="clscovertwo" id="idcovertwo">
+      <div class="clsdivleftcontent" id="iddivleftcontent">
+      
+      </div>
+      <div class="clsdivcentercontent" id="iddivcentercontent">
+<!----------------------------------------- Center Content started ------------------------------------------->
+       
+<div class="clsdivworkarea">
+  <input type="button" (click)="openPopup1();" value="Add User"/>
+      <br>
+      <br> 
+      <br>   
+  <table class="tblusers">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Designation</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let u of Userslist">
+        <td>{{ u.fullname }}</td>
+        <td>{{ u.jobtitle }}</td>
+        <td>{{ u.username}}</td>
+        <td>{{ u.rolename }}</td>
+        <td><input type="radio" name="radiogroup" value="{{u.id}}" (change)="handleChange($event)"/></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+       
+   <!-- -------------------------------------------------------------useraddew popup content started ------------------------------------------------------------------------->
+   <div id="myModal" class="modal-UserAddNewPopup">
+    <div id="myModalheader" class="modal-header-UserAddNewPopup">
+     <span class="close" (click)="closeUserAddNewPopup()">&times;</span>
+    </div>
+    <div class="modal-content-UserAddNewPopup">
+          <div>
+              <h1>Register</h1>
+              <p>Please fill in this form to create an user account.</p>
+              <hr>
+              
+            <table class="tblregisteruser">
+            <thead>
+            <tr>
+            <th>
+              </th>
+              <th>
+              </th>
+              </tr>
+            </thead>   
+            <tbody>  
+              <tr>
+            <td>
+              <label for="referencenumber"><b>Reference Number</b></label>
+              </td>
+              <td>
+              <input type="text" placeholder="Enter ReferenceNumber" name=userrefno id="userrefno" value={{userrefno}}/>
+              </td>
+              </tr>
+              
+              
+            <tr>
+            <td>
+              <label for="firstname"><b>First name</b></label>
+              </td>
+              <td>
+              <input type="text" placeholder="Enter Firstname" name="firstname" id="firstname"  ng-model="firstname" />
+              </td>
+              </tr>
+            
+            <tr>
+            <td>
+            <label for="lastname"><b>Last name</b></label>
+            </td>
+            <td>
+              <input type="text" placeholder="Enter Lastname" name="lastname" id="lastname"  ng-model="lastname" />
+              </td>
+            </tr>
+              
+            <tr>
+            <td>
+            <label for="email"><b>Email</b></label>
+            </td>
+            <td>
+              <input type="email" placeholder="Enter Email" name="email" id="email"  ng-model="email" />
+              </td>
+            </tr>
+            
+            <tr>
+            <td>
+            <label for="contact"><b>Contact Number</b></label>
+            </td>
+            <td>
+              <input type="text" placeholder="Enter Contact Number" name="contactnumber" id="contactnumber"  ng-model="contactnumber" />
+              </td>
+            </tr>
+            
+            
+            <tr>
+            <td>
+            <label for="jobtitle"><b>JobTitle</b></label>
+            </td>
+            <td>
+              <input type="text" placeholder="Enter JobTitle" name="jobtitle" id="jobtitle" ng-model="jobtitle"  />
+              </td>
+            </tr>
+            
+            
+            <tr>
+            <td>
+            <label for="role"><b>Role</b></label>
+            </td>
+            <td>
+              <select id="roles" (change)='roleChanging($event)'>
+              <option *ngFor="let row of roleslist" [value]="row.roleid">
+                {{row.rolename}}
+              </option>
+              </select>
+              </td>
+            </tr>
+            
+            
+            <tr>
+            <td>
+            <label for="username"><b>Username</b></label>
+            </td>
+            <td>
+            <input type="text" placeholder="Enter Username" name="username" id="username" ng-model="username"  />
+              </td>
+            </tr>
+            
+            
+            
+            <tr>
+            <td>
+            <label for="password"><b>Password</b></label>
+            </td>
+            <td>
+              <input type="password" placeholder="Enter Password" name="password" id="password" ng-model="password" />
+              </td>
+            </tr>
+            
+        
+            <tr>
+            <td>
+            <label for="retypepassword"><b>Retype Password</b></label>
+            </td>
+            <td>
+              <input type="password" placeholder="Retype Password" name="retypepassword" id="retypepassword"  ng-model="retypepassword" />
+              </td>
+            </tr>
+            
+              
+            <tr>
+            <td>
+               
+            </td>
+            <td>
+              <input type="button" placeholder="Register" name="register" id="register" value="Register" (click)="UserRegistration()"/>
+            </td>
+            </tr>
+          </tbody>
+            
+              </table>
+          </div>				
+
+
+    </div>
+     <div class="modal-footer-UserAddNewPopup">
+    </div>
+</div>
+<!-- -------------------------------------------------------------useraddew popup content completed------------------------------------------------------------------------>			
+
+ 
+<!------------------------------------------- Center Content finished ------------------------------------------>
+      </div>
+      <div class="clsdivrightcontent" id="iddivrightcontent">
+      
+      </div>
+    </div>
+  
+    <div class="clsdivfooter" id="iddivfooter">
+        Copyrights by   <label>{{client}}</label>
+        Version:   <label>{{version}}</label>
+    </div>
+    
+    
+</div>
