@@ -15,7 +15,7 @@ import { RemovebusinessComponent } from './removebusiness/removebusiness.compone
 import { ApplicationUserComponent } from './application-user/application-user.component';
 import { ApplicationRoleComponent } from './application-role/application-role.component';
 import { BrowserSessionComponent } from './browser-session/browser-session.component';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,8 @@ import { BrowserSessionComponent } from './browser-session/browser-session.compo
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     provideClientHydration(),
