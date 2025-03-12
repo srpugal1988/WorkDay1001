@@ -61,13 +61,26 @@
       <div class="clsdivcentercontent" id="iddivcentercontent">
 <!----------------------------------------- Center Content started ------------------------------------------->
           
-          <br>  
-          <br>
-          <br>
-          <br>
-          This is sample page for browser-sessions.....
-          
-          
+<div style="padding-left: 100px;padding-top: 50px;width: 1000px;">
+  <table>
+      <thead>
+      <tr>
+        <th>UserId</th>
+        <th>SessionId</th>
+        <th>Fullname</th>
+        <th>User Agent</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let s of SessionInfoList">
+        <td>{{s.userId}}</td>
+        <td>{{s.sessionId}}</td>
+        <td>{{s.fullname}}</td>
+        <td>{{s.useragent}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 <!------------------------------------------- Center Content finished ------------------------------------------>
       </div>
       <div class="clsdivrightcontent" id="iddivrightcontent">

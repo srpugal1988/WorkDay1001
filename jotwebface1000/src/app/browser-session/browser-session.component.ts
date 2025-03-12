@@ -3,6 +3,8 @@ import { Displayinfo } from '../models/displayinfo.model';
 import { Menuinfo } from '../models/Menuinfo.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { SessionInfo } from '../models/sessioninfo.model';
 
 
 @Component({
@@ -23,12 +25,14 @@ export class BrowserSessionComponent {
     DisplayinfoOne?: Displayinfo;
   
     Menuinfolist?: Menuinfo[];
+
+    SessionInfoList?: SessionInfo[];
   
-    constructor(private httpClient: HttpClient,private router: Router) {}
+    constructor(private httpClient: HttpClient,private router: Router,private formsmodule:FormsModule) {}
 
 
     ngOnInit(): void {
-    
+
       this.globalId=localStorage.getItem("globalid");
       this.displayname = localStorage.getItem("displayname");
       this.rolename = localStorage.getItem("rolename");
@@ -38,6 +42,7 @@ export class BrowserSessionComponent {
       this.moduleindex="3310";
       this.loadMenuBar();
       this.retriveLoginUserInformations();
+      this.retriveSessionInformations();
     }
 
     
@@ -117,8 +122,21 @@ proceedlogout() : void {
       }
     })
 
-
 }
 
+
+public retriveSessionInformations() {
+  var url = "http://localhost:8080/Jotwebserviceapi1000/settingsctrl/browser/sessions/fetchall";
+  this.httpClient.get<any>(url).subscribe({
+    next: data => {
+        this.SessionInfoList=data.pocket;
+        alert(data.message);
+    },
+    error: error => {
+        console.error('There was an error!', error);
+    }
+})
+
+}
 
 }
