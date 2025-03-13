@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component'; 
 import { CreatebusinessComponent } from './createbusiness/createbusiness.component';
 import { ReadbusinessComponent } from './readbusiness/readbusiness.component';  
@@ -13,10 +12,7 @@ import { BrowserSessionComponent } from './browser-session/browser-session.compo
 
 const routes: Routes = [
     {
-    path: 'jotwebface1000/login', component: LoginComponent
-    },
-    {
-      path: 'jotwebface1000/register', component: RegisterComponent
+      path: 'jotwebface1000/login', component: LoginComponent
     },
     {
       path: 'jotwebface1000/home', component: HomeComponent

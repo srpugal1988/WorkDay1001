@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
 body {
     font-family: Arial, Helvetica, sans-serif;
@@ -183,6 +183,7 @@ body {
       height: 500px;
       width: 1200px;
       overflow: scroll;
+      margin-top: 18px;
   }
   
   .clsdivworkarea 

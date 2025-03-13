@@ -1,8 +1,11 @@
 export class SessionInfo {
 
-    sessionId?: string;
-    userId?: string;
-    fullname?: string;
-    useragent?: string;
-    
+     id?: String;
+	 userId?: String;
+	 fullname?: String;
+	 sessionId?: String;
+	 useragent?: String;
+	 remoteHost?: String;
+	 ipAddress?: String;
+	 		
 }

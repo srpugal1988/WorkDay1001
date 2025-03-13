@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Displayinfo } from '../models/displayinfo.model';
 import { Menuinfo } from '../models/Menuinfo.model';
 import { Router } from '@angular/router';
+import { MasterUtil } from '../types/master';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class HomeComponent {
     this.moduleindex="1000";
     this.loadMenuBar();
     this.retriveLoginUserInformations();
-    //alert(this.userId);
+ 
   }
 
 
@@ -115,8 +116,6 @@ export class HomeComponent {
       var thisurl="http://localhost:8080/Jotwebserviceapi1000/auth/logout?id="+this.globalId;
       this.httpClient.get<any>(thisurl).subscribe({
         next: data => {
-            alert("Got response:");
-            alert("Code:"+data.code);
             localStorage.clear();
             this.router.navigate(['jotwebface1000/login']);
         },

@@ -4,7 +4,7 @@ import { Menuinfo } from '../models/Menuinfo.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { SessionInfo } from '../models/sessioninfo.model';
+import { SessionInfo } from '../models/SessionInfo.model';
 
 
 @Component({
@@ -125,7 +125,7 @@ proceedlogout() : void {
 }
 
 
-public retriveSessionInformations() {
+public retriveSessionInformations() : void {
   var url = "http://localhost:8080/Jotwebserviceapi1000/settingsctrl/browser/sessions/fetchall";
   this.httpClient.get<any>(url).subscribe({
     next: data => {
@@ -138,5 +138,9 @@ public retriveSessionInformations() {
 })
 
 }
+
+  Refresh() : void {
+    window.location.reload();
+  }
 
 }

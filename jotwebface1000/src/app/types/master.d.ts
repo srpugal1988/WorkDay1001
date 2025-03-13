@@ -1,5 +1,5 @@
-export declare global {
 
-  var CurrentUser: UserInfo;
+export class MasterUtil {
 
+  
 }

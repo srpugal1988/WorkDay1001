@@ -61,26 +61,33 @@
       <div class="clsdivcentercontent" id="iddivcentercontent">
 <!----------------------------------------- Center Content started ------------------------------------------->
           
-<div style="padding-left: 100px;padding-top: 50px;width: 1000px;">
+<i class="fa fa-refresh" style="font-size:40px;color:#ffc107;float:right;" (click)="Refresh();"></i>
+
+<div style="padding-left: 100px;padding-top: 50px;width: 100%;">
   <table>
       <thead>
       <tr>
         <th>UserId</th>
         <th>SessionId</th>
-        <th>Fullname</th>
+        <th>Name</th>
         <th>User Agent</th>
+        <th>Host</th>
+        <th>Ip Address</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let s of SessionInfoList">
-        <td>{{s.userId}}</td>
-        <td>{{s.sessionId}}</td>
-        <td>{{s.fullname}}</td>
-        <td>{{s.useragent}}</td>
+      <tr *ngFor="let ss of SessionInfoList">
+        <td>{{ss.userId}}</td>
+        <td>{{ss.sessionId}}</td>
+        <td>{{ss.fullname}}</td>
+        <td>{{ss.useragent}}</td>
+        <td>{{ss.remoteHost}}</td>
+        <td>{{ss.ipAddress}}</td>
       </tr>
       </tbody>
     </table>
   </div>
+
 <!------------------------------------------- Center Content finished ------------------------------------------>
       </div>
       <div class="clsdivrightcontent" id="iddivrightcontent">
