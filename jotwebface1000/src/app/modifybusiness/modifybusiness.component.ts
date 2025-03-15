@@ -33,6 +33,9 @@ export class ModifybusinessComponent {
 
   showUserAddNewPopup:boolean=false;
 
+  Jwttoken? : String;
+  
+
   modifyform  = new FormGroup({
     id:new FormControl(''),
     ownername: new FormControl(''),
@@ -62,6 +65,8 @@ export class ModifybusinessComponent {
         this.rolename = localStorage.getItem("rolename");
         this.client = localStorage.getItem("client");
         this.version = localStorage.getItem("version");
+        this.Jwttoken = localStorage.getItem("jwttoken")+"";
+
         this.moduleindex="2300";
         this.loadMenuBar();
         this.closeUserAddNewPopup();
@@ -81,8 +86,9 @@ export class ModifybusinessComponent {
 
 
   public retriveBusinessInformations() {
- 
-     this.httpClient.get<any>('http://localhost:8080/Jotwebserviceapi1000/business/fetchall').subscribe({
+     const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+     var url="http://localhost:8080/Jotwebserviceapi1000/business/fetchall?globalId="+this.globalId+"&hopeJwt=Yes";
+     this.httpClient.get<any>(url,{headers}).subscribe({
        next: data => {
            this.Businesslist=data.pocket;
        },
@@ -95,9 +101,9 @@ export class ModifybusinessComponent {
 
 
    public retriveBusinessInfo(businessid:any) {
- 
-    var url="http://localhost:8080/Jotwebserviceapi1000/business/fetch/"+businessid;
-    this.httpClient.get<any>(url).subscribe({
+    const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+    var url="http://localhost:8080/Jotwebserviceapi1000/business/fetch/"+businessid+"?globalId="+this.globalId+"&hopeJwt=Yes";
+    this.httpClient.get<any>(url,{headers}).subscribe({
       next: data => {
           //alert(data.data);
           this.BusinessOne=data.pocket;
@@ -111,9 +117,9 @@ export class ModifybusinessComponent {
   }
 
   public handleSubmit() {
-    
-     var url="http://localhost:8080/Jotwebserviceapi1000/business/modify/"+this.currentBusiness.id;
-     this.httpClient.put<any>(url,this.currentBusiness).subscribe({
+     const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+     var url="http://localhost:8080/Jotwebserviceapi1000/business/modify/"+this.currentBusiness.id+"?globalId="+this.globalId+"&hopeJwt=Yes";
+     this.httpClient.put<any>(url,this.currentBusiness,{headers}).subscribe({
        next: data => {
            alert(data.message);
        },
@@ -137,8 +143,9 @@ export class ModifybusinessComponent {
   
   loadMenuBar(): void{
 
-    var url="http://localhost:8080/Jotwebserviceapi1000/menu?id="+this.globalId;
-    this.httpClient.get<any>(url).subscribe({
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+      var url="http://localhost:8080/Jotwebserviceapi1000/menu?globalId="+this.globalId+"&hopeJwt=Yes";
+      this.httpClient.get<any>(url,{headers}).subscribe({
       next: data => {
 
         this.Menuinfolist = data.pocket;
@@ -173,9 +180,9 @@ for(i = 0; i < arr.length; i++) {
  retriveLoginUserInformations(): void {
  
 
-  var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&id="+this.globalId;
-    
-  this.httpClient.get<any>(url).subscribe({
+    const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+    var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&globalId="+this.globalId+"&hopeJwt=Yes";
+    this.httpClient.get<any>(url,{headers}).subscribe({
     next: data => {
 
       if(data.code=='100'){
@@ -192,6 +199,27 @@ for(i = 0; i < arr.length; i++) {
 
     },
     error: error => {
+        console.error('There was an error!', error);
+    }
+})
+
+
+}
+
+Refresh() : void {
+  window.location.reload();
+}
+
+proceedlogout() : void {
+    
+  const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+  var thisurl="http://localhost:8080/Jotwebserviceapi1000/auth/logout?globalId="+this.globalId+"&hopeJwt=Yes";
+  this.httpClient.get<any>(thisurl,{headers}).subscribe({
+    next: data => {
+        this.router.navigate(['jotwebface1000/login']);
+    },
+    error: error => {
+         alert("error");
         console.error('There was an error!', error);
     }
 })

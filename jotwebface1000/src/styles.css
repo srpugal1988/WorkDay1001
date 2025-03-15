@@ -270,3 +270,17 @@ body {
       font-size: 14px;
       visibility: hidden;
   }
+
+  .loader {
+    position: fixed;
+    height: 100%;
+    width:  100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.32);
+    z-index: 2000;
+  }
+

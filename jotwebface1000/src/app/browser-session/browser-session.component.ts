@@ -27,6 +27,8 @@ export class BrowserSessionComponent {
     Menuinfolist?: Menuinfo[];
 
     SessionInfoList?: SessionInfo[];
+
+    Jwttoken? : String;
   
     constructor(private httpClient: HttpClient,private router: Router,private formsmodule:FormsModule) {}
 
@@ -38,6 +40,7 @@ export class BrowserSessionComponent {
       this.rolename = localStorage.getItem("rolename");
       this.client = localStorage.getItem("client");
       this.version = localStorage.getItem("version");
+      this.Jwttoken = localStorage.getItem("jwttoken")+"";
   
       this.moduleindex="3310";
       this.loadMenuBar();
@@ -48,8 +51,9 @@ export class BrowserSessionComponent {
     
  loadMenuBar(): void{
 
-      var url="http://localhost:8080/Jotwebserviceapi1000/menu?id="+this.globalId;
-      this.httpClient.get<any>(url).subscribe({
+        const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+        var url="http://localhost:8080/Jotwebserviceapi1000/menu?globalId="+this.globalId+"&hopeJwt=Yes";
+        this.httpClient.get<any>(url,{headers}).subscribe({
         next: data => {
           this.Menuinfolist = data.pocket;
           this.myFunction(this.Menuinfolist);
@@ -81,8 +85,9 @@ myFunction(arr:any):void {
 
 retriveLoginUserInformations(): void {
 
-      var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&id="+this.globalId;
-      this.httpClient.get<any>(url).subscribe({
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+      var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&globalId="+this.globalId+"&hopeJwt=Yes";
+      this.httpClient.get<any>(url,{headers}).subscribe({
       next: data => {
 
         if(data.code=='100'){
@@ -105,32 +110,21 @@ retriveLoginUserInformations(): void {
 
 }
 
-
-proceedlogout() : void {
-
-    var thisurl="http://localhost:8080/Jotwebserviceapi1000/auth/logout?id="+this.globalId;
-    this.httpClient.get<any>(thisurl).subscribe({
-      next: data => {
-          alert("Got response:");
-          alert("Code:"+data.code);
-          localStorage.clear();
-          this.router.navigate(['jotwebface1000/login']);
-      },
-      error: error => {
-          alert("error");
-          console.error('There was an error!', error);
-      }
-    })
-
-}
-
-
 public retriveSessionInformations() : void {
-  var url = "http://localhost:8080/Jotwebserviceapi1000/settingsctrl/browser/sessions/fetchall";
-  this.httpClient.get<any>(url).subscribe({
+  const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+  var url = "http://localhost:8080/Jotwebserviceapi1000/settingsctrl/browser/sessions/fetchall?globalId="+this.globalId+"&hopeJwt=Yes";
+  this.httpClient.get<any>(url,{headers}).subscribe({
     next: data => {
-        this.SessionInfoList=data.pocket;
-        alert(data.message);
+
+        if(data.code=='100'){
+          alert(data.message);
+          this.SessionInfoList=data.pocket;
+        }
+        else if(data.code=='97'){          
+          alert(data.message );
+          this.router.navigate(['jotwebface1000/login']);
+        }
+
     },
     error: error => {
         console.error('There was an error!', error);
@@ -142,5 +136,22 @@ public retriveSessionInformations() : void {
   Refresh() : void {
     window.location.reload();
   }
+
+  proceedlogout() : void {
+    
+    const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+    var thisurl="http://localhost:8080/Jotwebserviceapi1000/auth/logout?globalId="+this.globalId+"&hopeJwt=Yes";
+    this.httpClient.get<any>(thisurl,{headers}).subscribe({
+      next: data => {
+          this.router.navigate(['jotwebface1000/login']);
+      },
+      error: error => {
+           alert("error");
+          console.error('There was an error!', error);
+      }
+  })
+
+
+}
 
 }

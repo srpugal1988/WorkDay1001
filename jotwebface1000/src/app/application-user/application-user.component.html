@@ -14,23 +14,23 @@
         </div>
         
         <div class="clsdivloggedbutton">
-          <a href="http://localhost:8080/Jotwebserviceapi1000/auth/logout?id={{globalId}}" type="GET">Logout</a>
+          <a (click)="proceedlogout();"  style="font-size:20px;color:burlywood;text-decoration: none;cursor: pointer;">Logout <i class="fa fa-sign-out"></i></a>
         </div>
       
       </div>
       <div class="clsdivnavigation" id="iddivnavigation">
       
         <div class="navbar">
-          <a href="http://localhost:8080/Jotwebserviceapi1000/1000" id="M1000">Home</a>
+          <a href="jotwebface1000/home" id="M1000">Home</a>
           
           <div class="dropdown">
           <button class="dropbtn" id="M2000">Workday 
           </button>
           <div class="dropdown-content">
-            <a href="http://localhost:8080/Jotwebserviceapi1000/2100"  id="M2100">Create Business</a>
-            <a href="http://localhost:8080/Jotwebserviceapi1000/2200"  id="M2200">Read Business</a>
-            <a href="http://localhost:8080/Jotwebserviceapi1000/2300"  id="M2300">Update Business</a>
-            <a href="http://localhost:8080/Jotwebserviceapi1000/2400"  id="M2400">Delete Business</a>
+            <a href="jotwebface1000/businessCreatePage"  id="M2100">Create Business</a>
+            <a href="jotwebface1000/businessReadPage"    id="M2200">Read Business</a>
+            <a href="jotwebface1000/businessUpdatePage"  id="M2300">Update Business</a>
+            <a href="jotwebface1000/businessDeletePage"  id="M2400">Delete Business</a>
           </div>
           </div> 
             
@@ -38,13 +38,13 @@
           <button class="dropbtn" id="M3000">Settings 
           </button>
           <div class="dropdown-content">
-            <a href="http://localhost:8080/Jotwebserviceapi1000/3100" id="M3100">User</a>
-            <a href="http://localhost:8080/Jotwebserviceapi1000/3200" id="M3200">Role</a>
+            <a href="jotwebface1000/settingsUserPage" id="M3100">User</a>
+            <a href="jotwebface1000/settingsRolePage" id="M3200">Role</a>
                 <div class="dropdown-r8" >
                   <button class="dropbtn-r8" id="M3300">Browser 
                   </button>
                   <div class="dropdown-content-r8">
-                    <a href="http://localhost:8080/Jotwebserviceapi1000/3310" id="M3310">Sessions</a>
+                    <a href="jotwebface1000/settingsBrowserSessionPage" id="M3310">Sessions</a>
                   </div>
               </div> 
           </div>
@@ -60,6 +60,7 @@
       </div>
       <div class="clsdivcentercontent" id="iddivcentercontent">
 <!----------------------------------------- Center Content started ------------------------------------------->
+<i class="fa fa-refresh" style="font-size:40px;color:#ffc107;float:right;" (click)="Refresh();"></i>
        
 <div class="clsdivworkarea">
   <input type="button" (click)="openPopup1();" value="Add User"/>

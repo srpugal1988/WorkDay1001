@@ -20,22 +20,29 @@ export class LoginComponent {
 
   GlobalUser? : UserInfo;
 
+  Jwttoken? : String;
+
   logindata  = new FormGroup({
     username: new FormControl(''),
     password: new FormControl('')
   });
+
+
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.moduleindex="1";
     this.hidelodingicon();
+    this.Jwttoken="";
     //this.retriveLoginUserInformations();
     //localStorage.clear();
   }
 
   public handleSubmit() {
-   
+     const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+     var thisurls="http://localhost:8080/Jotwebserviceapi1000/auth/login?hopeJwt=No";
+     
      if(this.logindata.value.username==''){
       alert("Please enter username");
      }
@@ -46,7 +53,7 @@ export class LoginComponent {
 
       this.showloadingicon();
 
-      this.httpClient.post<any>('http://localhost:8080/Jotwebserviceapi1000/auth/login',this.logindata.value).subscribe({
+      this.httpClient.post<any>(thisurls,this.logindata.value,{headers}).subscribe({
         next: data => {
             this.hidelodingicon();
 
@@ -54,12 +61,16 @@ export class LoginComponent {
 
               this.GlobalUser=data.pocket.UserInfo;
               this.DisplayinfoOne=data.pocket.DisplayInfo;
+              this.Jwttoken=data.pocket.jwttoken;
 
               localStorage.setItem("globalid",this.GlobalUser?.globalId+"");
               localStorage.setItem("displayname",this.DisplayinfoOne?.displayname+"");
               localStorage.setItem("rolename",this.DisplayinfoOne?.rolename+"");
               localStorage.setItem("client",this.DisplayinfoOne?.client+"");
               localStorage.setItem("version",this.DisplayinfoOne?.version+"");
+              localStorage.setItem("jwttoken",this.Jwttoken+"");
+
+              //alert("wooo"+this.Jwttoken);
 
               this.router.navigate(['jotwebface1000/home']);
               

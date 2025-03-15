@@ -38,6 +38,8 @@ export class ApplicationRoleComponent {
 
     showUserRoleNewPopup?: boolean;
 
+    Jwttoken? : String;
+
     constructor(private httpClient: HttpClient,private router: Router) {}
       
     ngOnInit(): void {
@@ -47,15 +49,20 @@ export class ApplicationRoleComponent {
       this.rolename = localStorage.getItem("rolename");
       this.client = localStorage.getItem("client");
       this.version = localStorage.getItem("version");
+      this.Jwttoken = localStorage.getItem("jwttoken")+"";
       this.moduleindex="3200";
       this.roleid=0;
       this.newrolename="";
       this.showUserRoleNewPopup=false;
 
+      this.showloadingicon();
+
       this.loadMenuBar();
       this.retriveLoginUserInformations();
       this.loadRolesDropDown();
       this.closeUserRoleNewPopup();
+
+      this.hidelodingicon();
       
     }
   
@@ -63,8 +70,9 @@ export class ApplicationRoleComponent {
     
    loadMenuBar(): void{
   
-            var url="http://localhost:8080/Jotwebserviceapi1000/menu?id="+this.globalId;
-            this.httpClient.get<any>(url).subscribe({
+            const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+            var url="http://localhost:8080/Jotwebserviceapi1000/menu?globalId="+this.globalId+"&hopeJwt=Yes";
+            this.httpClient.get<any>(url,{headers}).subscribe({
             next: data => {
   
               this.Menuinfolist = data.pocket;
@@ -98,9 +106,9 @@ export class ApplicationRoleComponent {
   
     retriveLoginUserInformations(): void {
    
-      var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&id="+this.globalId;
-    
-      this.httpClient.get<any>(url).subscribe({
+        const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+        var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&globalId="+this.globalId+"&hopeJwt=Yes";
+        this.httpClient.get<any>(url,{headers}).subscribe({
         next: data => {
   
           if(data.code=='100'){
@@ -129,16 +137,17 @@ export class ApplicationRoleComponent {
 
        const current = new Date();
        const timestamp = current.getTime();
-       
-      // $scope.roleslist= ["ADMIN", "USER", "JOBSEEKER","CLIENT"];
-      this.httpClient.get<any>('http://localhost:8080/Jotwebserviceapi1000/settingsctrl/role/fetchall?timestamp='+timestamp).subscribe({
-        next: data => {
-          this.roleslist = data.pocket.rolesinformationlist;
-        },
-        error: error => {
-            console.error('There was an error!', error);
-        }
-      })
+       const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+       var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/role/fetchall?timestamp="+timestamp+"&hopeJwt=Yes&globalId="+this.globalId;
+
+        this.httpClient.get<any>(url,{headers}).subscribe({
+          next: data => {
+            this.roleslist = data.pocket.rolesinformationlist;
+          },
+          error: error => {
+              console.error('There was an error!', error);
+          }
+        })
     }
 
 
@@ -152,10 +161,10 @@ export class ApplicationRoleComponent {
     loadModuleRightsInformation():void{
       const current = new Date();
       const timestamp = current.getTime();
-      
-      var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/role/rights?roleid="+this.roleid+"&timestamp="+timestamp;
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+      var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/role/rights?roleid="+this.roleid+"&timestamp="+timestamp+"&hopeJwt=Yes&globalId="+this.globalId;
    
-      this.httpClient.get<any>(url).subscribe({
+      this.httpClient.get<any>(url,{headers}).subscribe({
       next: data => {
         
         this.rolesrightlist = data.pocket.rolesrightlist;
@@ -170,11 +179,11 @@ export class ApplicationRoleComponent {
 
     ChangeModuleAccess(mod:RoleRightsInfo):void{
       
-      const current = new Date();
-      const timestamp = current.getTime();
-      
-          var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/role/rightschange?roleid="+mod.roleid+"&timestamp="+timestamp;
-          this.httpClient.post<any>(url,mod).subscribe({
+          const current = new Date();
+          const timestamp = current.getTime();
+          const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+          var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/role/rightschange?roleid="+mod.roleid+"&timestamp="+timestamp+"&hopeJwt=Yes&globalId="+this.globalId;
+          this.httpClient.post<any>(url,mod,{headers}).subscribe({
             next: data => {
               alert("Roles rights changed for the module:"+mod.modulename);
                this.loadModuleRightsInformation();
@@ -191,16 +200,17 @@ export class ApplicationRoleComponent {
 	
       const current = new Date();
       const timestamp = current.getTime();
-      
-      let nameTextBox = document.getElementById("newrolename") as HTMLInputElement;
-      this.newrolename = nameTextBox.value;
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
 
-      var RoleData = {
-        rolename: this.newrolename
-      };
+          let nameTextBox = document.getElementById("newrolename") as HTMLInputElement;
+          this.newrolename = nameTextBox.value;
+
+          var RoleData = {
+            rolename: this.newrolename
+          };
   
-          var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/role/store?timestamp="+timestamp;
-          this.httpClient.post<any>(url,RoleData).subscribe({
+          var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/role/store?timestamp="+timestamp+"&hopeJwt=Yes&globalId="+this.globalId;
+          this.httpClient.post<any>(url,RoleData,{headers}).subscribe({
             next: data => {
               alert(data.message);
                this.closeUserRoleNewPopup();
@@ -230,5 +240,34 @@ export class ApplicationRoleComponent {
         this.showUserRoleNewPopup=false;
         (<HTMLInputElement> document.getElementById("myModal")).style.display="none";
       };
+
+      Refresh() : void {
+        window.location.reload();
+      }
+
+      proceedlogout() : void {
+    
+        const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+        var thisurl="http://localhost:8080/Jotwebserviceapi1000/auth/logout?globalId="+this.globalId+"&hopeJwt=Yes";
+        this.httpClient.get<any>(thisurl,{headers}).subscribe({
+          next: data => {
+              this.router.navigate(['jotwebface1000/login']);
+          },
+          error: error => {
+               alert("error");
+              console.error('There was an error!', error);
+          }
+      })
+    
+  
+    }
+
+    showloadingicon():void {
+      (<HTMLInputElement> document.getElementById("loader")).style.display="block";
+    } 
+  
+    hidelodingicon():void{
+       (<HTMLInputElement> document.getElementById("loader")).style.display="none";
+    }
 
 }

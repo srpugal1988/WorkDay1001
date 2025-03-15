@@ -42,6 +42,8 @@ export class ApplicationUserComponent {
 
   rl?: any;
 
+  Jwttoken? : String;
+
   constructor(private httpClient: HttpClient,private router: Router) {}
     
   ngOnInit(): void {
@@ -51,6 +53,8 @@ export class ApplicationUserComponent {
     this.rolename = localStorage.getItem("rolename");
     this.client = localStorage.getItem("client");
     this.version = localStorage.getItem("version");
+    this.Jwttoken = localStorage.getItem("jwttoken")+"";
+
     this.moduleindex="3100";
     this.roleid=0;
     this.userrefno=0;
@@ -68,8 +72,9 @@ export class ApplicationUserComponent {
   
  loadMenuBar(): void{
 
-          var url="http://localhost:8080/Jotwebserviceapi1000/menu?id="+this.globalId;
-          this.httpClient.get<any>(url).subscribe({
+          const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+          var url="http://localhost:8080/Jotwebserviceapi1000/menu?globalId="+this.globalId+"&hopeJwt=Yes";
+          this.httpClient.get<any>(url,{headers}).subscribe({
           next: data => {
 
             this.Menuinfolist = data.pocket;
@@ -103,9 +108,9 @@ export class ApplicationUserComponent {
 
   retriveLoginUserInformations(): void {
  
-    var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&id="+this.globalId;
-    
-    this.httpClient.get<any>(url).subscribe({
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+      var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&globalId="+this.globalId+"&hopeJwt=Yes";
+      this.httpClient.get<any>(url,{headers}).subscribe({
       next: data => {
 
         if(data.code=='100'){
@@ -134,11 +139,21 @@ export class ApplicationUserComponent {
 
         const current = new Date();
         const timestamp = current.getTime();
+        const headers = { 'Authorization': 'Bearer '+'CCCCCCC' };
 
-		    var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/user/fetchall?timestamp="+timestamp; 
-        this.httpClient.get<any>(url).subscribe({
+		    var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/user/fetchall?timestamp="+timestamp+"&globalId="+this.globalId+"&hopeJwt=Yes"; 
+        this.httpClient.get<any>(url,{headers}).subscribe({
           next: data => {
-            this.Userslist = data.pocket.userlist;
+        
+            if(data.code=='100'){
+              alert(data.message);
+              this.Userslist = data.pocket.userlist;
+            }
+            else if(data.code=='97'){          
+              alert(data.message );
+              this.router.navigate(['jotwebface1000/login']);
+            }
+
           },
           error: error => {
               console.error('There was an error!', error);
@@ -182,8 +197,9 @@ export class ApplicationUserComponent {
 		 const current = new Date();
 		 const timestamp = current.getTime();
        
-      // $scope.roleslist= ["ADMIN", "USER", "JOBSEEKER","CLIENT"];
-      this.httpClient.get<any>('http://localhost:8080/Jotwebserviceapi1000/settingsctrl/role/fetchall?timestamp='+timestamp).subscribe({
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+      var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/role/fetchall?timestamp="+timestamp+"&hopeJwt=Yes&globalId="+this.globalId;
+      this.httpClient.get<any>(url,{headers}).subscribe({
         next: data => {
           this.roleslist = data.pocket.rolesinformationlist;
         },
@@ -204,9 +220,10 @@ export class ApplicationUserComponent {
 
 		const current = new Date();
 		const timestamp = current.getTime();
-		
-    var url= "http://localhost:8080/Jotwebserviceapi1000/settingsctrl/user/getnextuserreferencenumber?timestamp="+timestamp;
-    this.httpClient.get<any>(url).subscribe({
+		const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+
+    var url= "http://localhost:8080/Jotwebserviceapi1000/settingsctrl/user/getnextuserreferencenumber?timestamp="+timestamp+"&hopeJwt=Yes&globalId="+this.globalId;
+    this.httpClient.get<any>(url,{headers}).subscribe({
       next: data => {
         this.userrefno= data.pocket.userreferencenumber;
       },
@@ -219,9 +236,10 @@ export class ApplicationUserComponent {
 
   
   UserRegistration():void {
-		const current = new Date();
-		const timestamp = current.getTime();
-		
+      const current = new Date();
+      const timestamp = current.getTime();
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+
       var userrefno= (<HTMLInputElement> document.getElementById("userrefno")).value;
       var firstname= (<HTMLInputElement> document.getElementById("firstname")).value;
       var lastname= (<HTMLInputElement> document.getElementById("lastname")).value;
@@ -298,8 +316,8 @@ export class ApplicationUserComponent {
 
           //alert(UserData);
         
-              var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/user/store?timestamp="+timestamp;
-              this.httpClient.post<any>(url,UserData).subscribe({
+              var url="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/user/store?timestamp="+timestamp+"&hopeJwt=Yes&globalId="+this.globalId;
+              this.httpClient.post<any>(url,UserData,{headers}).subscribe({
                 next: data => {
                     alert(data.message);
                     this.closeUserAddNewPopup();
@@ -316,5 +334,25 @@ export class ApplicationUserComponent {
 	
 	}
 
+  Refresh() : void {
+    window.location.reload();
+  }
   
+  proceedlogout() : void {
+    
+    const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+    var thisurl="http://localhost:8080/Jotwebserviceapi1000/auth/logout?globalId="+this.globalId+"&hopeJwt=Yes";
+    this.httpClient.get<any>(thisurl,{headers}).subscribe({
+      next: data => {
+          this.router.navigate(['jotwebface1000/login']);
+      },
+      error: error => {
+           alert("error");
+          console.error('There was an error!', error);
+      }
+  })
+
+
+}
+
 }

@@ -27,6 +27,8 @@ export class CreatebusinessComponent {
 
   Menuinfolist?: Menuinfo[];
 
+  Jwttoken? : String;
+
   registerform  = new FormGroup({
     ownername: new FormControl(''),
     businessname: new FormControl(''),
@@ -37,14 +39,16 @@ export class CreatebusinessComponent {
   });
 
   constructor(private httpClient: HttpClient,private router: Router) {}
-
+ 
+  /*
   reqHeaders:any = new HttpHeaders({
      "Access-Control-Allow-Origin": "http://localhost:4200"
   });
+  */
 
   public handleSubmit() {
    // console.log(this.registerform.value);
-
+   const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
     
    if(this.registerform.value.ownername==''){
     alert("Please enter the ownername");
@@ -66,8 +70,8 @@ export class CreatebusinessComponent {
    }
    else{
 
-            var url="http://localhost:8080/Jotwebserviceapi1000/business/add";
-            this.httpClient.post<any>(url,this.registerform.value).subscribe({
+            var url="http://localhost:8080/Jotwebserviceapi1000/business/add?globalId="+this.globalId+"&hopeJwt=Yes";
+            this.httpClient.post<any>(url,this.registerform.value,{headers}).subscribe({
               next: data => {
                   alert(data.message);
               },
@@ -88,6 +92,8 @@ export class CreatebusinessComponent {
         this.rolename = localStorage.getItem("rolename");
         this.client = localStorage.getItem("client");
         this.version = localStorage.getItem("version");
+        this.Jwttoken = localStorage.getItem("jwttoken")+"";
+
         this.moduleindex="2100";
         this.loadMenuBar();
         this.retriveLoginUserInformations();
@@ -97,8 +103,9 @@ export class CreatebusinessComponent {
   
   loadMenuBar(): void{
 
-    var url="http://localhost:8080/Jotwebserviceapi1000/menu?id="+this.globalId;
-    this.httpClient.get<any>(url).subscribe({
+    const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+    var url="http://localhost:8080/Jotwebserviceapi1000/menu?globalId="+this.globalId+"&hopeJwt=Yes";
+    this.httpClient.get<any>(url,{headers}).subscribe({
       next: data => {
 
         this.Menuinfolist = data.pocket;
@@ -133,9 +140,9 @@ for(i = 0; i < arr.length; i++) {
 
   retriveLoginUserInformations(): void {
     
-    var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&id="+this.globalId;
-    
-    this.httpClient.get<any>(url).subscribe({
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+      var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&globalId="+this.globalId+"&hopeJwt=Yes";
+      this.httpClient.get<any>(url,{headers}).subscribe({
       next: data => {
 
         if(data.code=='100'){
@@ -159,7 +166,26 @@ for(i = 0; i < arr.length; i++) {
   }
 
 
+  Refresh() : void {
+    window.location.reload();
+  }
 
+  proceedlogout() : void {
+    
+    const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+    var thisurl="http://localhost:8080/Jotwebserviceapi1000/auth/logout?globalId="+this.globalId+"&hopeJwt=Yes";
+    this.httpClient.get<any>(thisurl,{headers}).subscribe({
+      next: data => {
+          this.router.navigate(['jotwebface1000/login']);
+      },
+      error: error => {
+           alert("error");
+          console.error('There was an error!', error);
+      }
+  })
+
+
+}
 
 
 }

@@ -28,6 +28,8 @@ export class HomeComponent {
 
   Menuinfolist?: Menuinfo[];
 
+  Jwttoken? : String;
+
   constructor(private httpClient: HttpClient,private router: Router) {}
   
 
@@ -38,19 +40,21 @@ export class HomeComponent {
     this.rolename = localStorage.getItem("rolename");
     this.client = localStorage.getItem("client");
     this.version = localStorage.getItem("version");
+    this.Jwttoken = localStorage.getItem("jwttoken")+"";
 
     this.moduleindex="1000";
     this.loadMenuBar();
     this.retriveLoginUserInformations();
- 
+
   }
 
 
   
  loadMenuBar(): void{
 
-        var url="http://localhost:8080/Jotwebserviceapi1000/menu?id="+this.globalId;
-        this.httpClient.get<any>(url).subscribe({
+        const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+        var url="http://localhost:8080/Jotwebserviceapi1000/menu?globalId="+this.globalId+"&hopeJwt=Yes";
+        this.httpClient.get<any>(url,{headers}).subscribe({
           next: data => {
 
             this.Menuinfolist = data.pocket;
@@ -84,9 +88,9 @@ export class HomeComponent {
 
   retriveLoginUserInformations(): void {
 
-    var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&id="+this.globalId;
-    
-    this.httpClient.get<any>(url).subscribe({
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+      var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&globalId="+this.globalId+"&hopeJwt=Yes";
+      this.httpClient.get<any>(url,{headers}).subscribe({
       next: data => {
 
         if(data.code=='100'){
@@ -112,11 +116,11 @@ export class HomeComponent {
 
 
   proceedlogout() : void {
-    
-      var thisurl="http://localhost:8080/Jotwebserviceapi1000/auth/logout?id="+this.globalId;
-      this.httpClient.get<any>(thisurl).subscribe({
+
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+      var thisurl="http://localhost:8080/Jotwebserviceapi1000/auth/logout?globalId="+this.globalId+"&hopeJwt=Yes";
+      this.httpClient.get<any>(thisurl,{headers}).subscribe({
         next: data => {
-            localStorage.clear();
             this.router.navigate(['jotwebface1000/login']);
         },
         error: error => {
@@ -128,4 +132,7 @@ export class HomeComponent {
 
   }
  
+  Refresh() : void {
+    window.location.reload();
+  }
 }
