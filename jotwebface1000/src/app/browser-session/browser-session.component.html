@@ -61,12 +61,13 @@
       <div class="clsdivcentercontent" id="iddivcentercontent">
 <!----------------------------------------- Center Content started ------------------------------------------->
           
-<i class="fa fa-refresh" style="font-size:40px;color:#ffc107;float:right;" (click)="Refresh();"></i>
+<i class="fa fa-refresh" style="font-size:25px;color:#90c0f3;float:left;margin-left: 10px;margin-top: 10px;" (click)="Refresh();"></i>
 
 <div style="padding-left: 100px;padding-top: 50px;width: 100%;">
-  <table>
+  <table style="width: 3000px;">
       <thead>
       <tr>
+        <th>Kill</th>
         <th>UserId</th>
         <th>SessionId</th>
         <th>Name</th>
@@ -77,6 +78,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let ss of SessionInfoList">
+        <td style="text-align: center;"><input type="radio" name="radiogroup" style="width: 20px;height: 20px;" value="{{ss.sessionId}}" (click)="handleChange($event)"/></td>
         <td>{{ss.userId}}</td>
         <td>{{ss.sessionId}}</td>
         <td>{{ss.fullname}}</td>

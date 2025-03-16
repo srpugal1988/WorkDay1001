@@ -70,7 +70,7 @@ export class ModifybusinessComponent {
         this.moduleindex="2300";
         this.loadMenuBar();
         this.closeUserAddNewPopup();
-        this.retriveLoginUserInformations();
+        this.checkForPageAccess();
         this.retriveBusinessInformations();
   }
 
@@ -177,31 +177,37 @@ for(i = 0; i < arr.length; i++) {
 }
 }
 
- retriveLoginUserInformations(): void {
- 
+checkForPageAccess(): void {
 
-    const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
-    var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&globalId="+this.globalId+"&hopeJwt=Yes";
-    this.httpClient.get<any>(url,{headers}).subscribe({
-    next: data => {
+  const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+  var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkForPageAccess?moduleindex="+this.moduleindex+"&globalId="+this.globalId+"&hopeJwt=Yes";
+  this.httpClient.get<any>(url,{headers}).subscribe({
+  next: data => {
 
-      if(data.code=='100'){
-            //this.DisplayinfoOne = data.pocket;
-      }
-      else if(data.code=='99'){
-            this.router.navigate(['jotwebface1000/login']);
-            alert("Kindly login to proceed further!...");
-      }
-      else if(data.code=='98'){
-            this.router.navigate(['jotwebface1000/login']);
-            alert("You dont have access to this page! Kindly login");
-      }
-
-    },
-    error: error => {
-        console.error('There was an error!', error);
+    if(data.code=='100'){
+         //YOU HAVE ACCESS TO THIS PAGE
     }
-})
+    else if(data.code=='98'){
+          alert(data.message);
+          this.router.navigate(['jotwebface1000/login']);
+    }
+    else if(data.code=='97'){
+          alert(data.message);
+          this.router.navigate(['jotwebface1000/home']);
+     }
+    else if(data.code=='96'){
+      alert(data.message);
+      this.router.navigate(['jotwebface1000/login']);
+    }
+    else {
+          alert(data.message);
+    }
+
+  },
+  error: error => {
+      console.error('There was an error!', error);
+  }
+  })
 
 
 }

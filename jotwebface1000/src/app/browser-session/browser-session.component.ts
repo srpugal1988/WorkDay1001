@@ -44,7 +44,7 @@ export class BrowserSessionComponent {
   
       this.moduleindex="3310";
       this.loadMenuBar();
-      this.retriveLoginUserInformations();
+      this.checkForPageAccess();
       this.retriveSessionInformations();
     }
 
@@ -83,30 +83,39 @@ myFunction(arr:any):void {
       }
 }
 
-retriveLoginUserInformations(): void {
 
-      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
-      var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkLoginUser?moduleindex="+this.moduleindex+"&globalId="+this.globalId+"&hopeJwt=Yes";
-      this.httpClient.get<any>(url,{headers}).subscribe({
-      next: data => {
+checkForPageAccess(): void {
 
-        if(data.code=='100'){
-            // this.DisplayinfoOne = data.pocket;
-        }
-        else if(data.code=='99'){
-              this.router.navigate(['jotwebface1000/login']);
-              alert("Kindly login to proceed further!...");
-        }
-        else if(data.code=='98'){
-              this.router.navigate(['jotwebface1000/login']);
-              alert("You dont have access to this page! Kindly login");
-        }
+  const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+  var url="http://localhost:8080/Jotwebserviceapi1000/auth/checkForPageAccess?moduleindex="+this.moduleindex+"&globalId="+this.globalId+"&hopeJwt=Yes";
+  this.httpClient.get<any>(url,{headers}).subscribe({
+  next: data => {
 
-      },
-      error: error => {
-          console.error('There was an error!', error);
-      }
-      })
+    if(data.code=='100'){
+         //YOU HAVE ACCESS TO THIS PAGE
+    }
+    else if(data.code=='98'){
+          alert(data.message);
+          this.router.navigate(['jotwebface1000/login']);
+    }
+    else if(data.code=='97'){
+          alert(data.message);
+          this.router.navigate(['jotwebface1000/home']);
+     }
+     else if(data.code=='96'){
+      alert(data.message);
+      this.router.navigate(['jotwebface1000/login']);
+    }
+    else {
+          alert(data.message);
+    }
+
+  },
+  error: error => {
+      console.error('There was an error!', error);
+  }
+  })
+
 
 }
 
@@ -153,5 +162,39 @@ public retriveSessionInformations() : void {
 
 
 }
+
+  handleChange(evt:any) {
+    var target = evt.target;
+    var killerId=target.value;
+    
+
+    if(confirm("Are you sure want to kill the session? "+killerId)) {
+
+      const headers = { 'Authorization': 'Bearer '+this.Jwttoken };
+      var thisurl="http://localhost:8080/Jotwebserviceapi1000/settingsctrl/browser/sessions/kill?killerId="+killerId+"&globalId="+this.globalId+"&hopeJwt=Yes";
+      this.httpClient.get<any>(thisurl,{headers}).subscribe({
+        next: data => {
+
+            if(data.code=='100'){
+                alert(data.message);
+                this.Refresh();
+            }
+            else if(data.code=='97'){
+                alert(data.message);
+                this.router.navigate(['jotwebface1000/login']);
+            }
+            else{
+                alert(data.message);
+            }
+        },
+        error: error => {
+            alert("error");
+            console.error('There was an error!', error);
+        }
+      })
+
+    }
+  }
+
 
 }
