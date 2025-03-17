@@ -14,7 +14,7 @@
       </div>
       
       <div class="clsdivloggedbutton">
-        <a (click)="proceedlogout();"  style="font-size:20px;color:burlywood;text-decoration: none;cursor: pointer;">Logout <i class="fa fa-sign-out"></i></a>
+        <a (click)="proceedlogout();" style="text-decoration: underline;cursor: pointer;color:skyblue">Logout  <i class="fa fa-sign-out"></i></a>
       </div>
     
     </div>
@@ -60,7 +60,7 @@
     </div>
     <div class="clsdivcentercontent" id="iddivcentercontent">
 <!----------------------------------------- Center Content started ------------------------------------------->
-<i class="fa fa-refresh" style="font-size:40px;color:#ffc107;float:right;" (click)="Refresh();"></i>   
+<i class="fa fa-refresh" style="font-size:25px;color:#90c0f3;float:left;margin-left: 10px;margin-top: 10px;" (click)="Refresh();"></i>
 
 <div style="padding-left: 100px;padding-top: 50px;width: 1000px;">
 <table>
@@ -83,7 +83,7 @@
       <td>{{b.businesstype}}</td>
       <td>{{b.email}}</td>
       <td>{{b.phonenumber}}</td>
-      <td><input type="radio" name="radiogroup" value="{{b.id}}" (change)="handleChange($event)"/></td>
+      <td style="text-align: center;"><input type="radio" name="radiogroup" style="width: 20px;height: 20px;" value="{{b.id}}" (click)="handleChange($event)"/></td>
     </tr>
     </tbody>
   </table>
