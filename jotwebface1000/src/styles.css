@@ -12,6 +12,7 @@ body {
     display: block;
     position: absolute;
     width:1250px;
+    margin-top: -15px;
   }
   
   .navbar a {
@@ -147,6 +148,7 @@ body {
   {
       height: 100px;
       width:100px;
+      border-style: inset;
   }
   .clsdivheader
   {
@@ -183,7 +185,7 @@ body {
       height: 500px;
       width: 1200px;
       overflow: scroll;
-      margin-top: 18px;
+      margin-top: 0px;
   }
   
   .clsdivworkarea 
@@ -200,10 +202,11 @@ body {
   
   .clsdivfooter
   {
-      background-color:#858585;
+      background-color: #504c62;
       height: 40px;
       width: 1350px;
-    text-align:center;
+      text-align:center;
+      color:cadetblue;
   }
   
   label {
@@ -263,6 +266,7 @@ body {
   .clslbldispalyrole{
       color: #00ff14;
       font-size: 14px;
+      font-weight: bold;
   }
   
   .clslbldisplaymoduleindex{

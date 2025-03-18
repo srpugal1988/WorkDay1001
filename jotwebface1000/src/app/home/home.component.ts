@@ -4,7 +4,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Displayinfo } from '../models/displayinfo.model';
 import { Menuinfo } from '../models/Menuinfo.model';
 import { Router } from '@angular/router';
-import { MasterUtil } from '../types/master';
 
 
 @Component({
@@ -29,6 +28,7 @@ export class HomeComponent {
   Menuinfolist?: Menuinfo[];
 
   Jwttoken? : String;
+
 
   constructor(private httpClient: HttpClient,private router: Router) {}
   
